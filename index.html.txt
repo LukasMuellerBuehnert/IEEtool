@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IEE Beratungstool</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-900 text-gray-200">
+  <div class="container mx-auto p-4 max-w-md">
+    <h1 class="text-xl mb-4">IEE Beratungstool</h1>
+
+    <label class="block mb-2">Verbrauch (kWh):
+      <input type="range" id="verbrauch" min="2000" max="20000">
+      <span id="verbrWert">?</span>
+    </label>
+
+    <label class="block mb-2">Ausrichtung:
+      <input type="range" id="ausrichtung" min="0" max="6">
+      <span id="ausrIch">?</span>
+    </label>
+
+    <label class="block mb-2">Belegte Seiten:
+      <input type="range" id="seiten" min="0" max="2">
+      <span id="seitenIch">?</span>
+    </label>
+
+    <label class="block mb-2">Preis pro kWh (ct):
+      <input type="range" id="preis_kwh" min="20" max="50">
+      <span id="preisWert">?</span>
+    </label>
+
+    <label class="block mb-4">Grundpreis pro Jahr (€):
+      <input type="range" id="grundpreis" min="70" max="250">
+      <span id="grundWert">?</span>
+    </label>
+
+    <button id="calc" class="bg-blue-500 text-white px-4 py-2 rounded mb-4">Berechnen</button>
+
+    <h2 class="text-lg mb-2">Ergebnis</h2>
+    <div id="ergebnis" class="bg-gray-800 p-4 rounded space-y-1">
+      <!-- Ausgabe hier -->
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
