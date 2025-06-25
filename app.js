@@ -17,6 +17,7 @@ const seitenTbl = [
 
 const modulleistung = 450;
 const modulpreis = 251;
+const steigerung = 1.04;
 
 const speicherpreise = {
   "Alpha 3.65": 2700,
@@ -55,10 +56,74 @@ const zusatzleistungen = {
   Potentialausgleich: 1100
 };
 
+let chart;
+
+function updateChart() {
+  const kosten1Jahr = +verbrauch.value * (+preis.value / 100) + +grundpreis.value;
+  const jahre = Array.from({ length: 21 }, (_, i) => i); // 0 bis 20
+  const kostenProJahr = jahre.map(j =>
+    kostenErstesJahr * Math.pow(steigerung, j)
+  );
+
+  const kumulierteKosten = jahre.map(j =>
+    (kostenErstesJahr / Math.log(steigerung)) * (Math.pow(steigerung, j + 1) - 1)
+  );
+
+  if (chart) chart.destroy(); // Vorherige Version entfernen
+
+  const ctx = document.getElementById("kostenChart").getContext("2d");
+  chart = new Chart(ctx, {
+    type: "line",
+    data: {
+      labels: jahre,
+      datasets: [
+        {
+          label: "Stromkosten pro Jahr",
+          data: kostenProJahr,
+          borderWidth: 2,
+          borderColor: "rgb(59, 130, 246)",
+          fill: false
+        },
+        {
+          label: "Kumulierte Kosten",
+          data: kumulierteKosten,
+          borderWidth: 2,
+          borderColor: "rgb(234, 88, 12)",
+          borderDash: [5, 5],
+          fill: false
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        x: {
+          title: { display: true, text: "Jahre" }
+        },
+        y: {
+          title: { display: true, text: "Kosten in €" },
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+  const k10 = kumulierteKosten[10].toFixed(0);
+  const k20 = kumulierteKosten[20].toFixed(0);
+  const kj = kostenErstesJahr.toFixed(0);
+
+  kostenTexte.innerHTML = `
+    <p>Aktuelle jährliche Stromkosten: <strong>${kj} €</strong></p>
+    <p>Kumulierte Kosten in 10 Jahren: <strong>${k10} €</strong></p>
+    <p>Kumulierte Kosten in 20 Jahren: <strong>${k20} €</strong></p>
+  `;
+}
+
 // Textausgabe-Funktionen
 function updateVerbrauchText() {
   v_out.textContent = `${verbrauch.value} kWh`;
   updateEmpfehlung();
+  updateChart();
 }
 
 function updateAusrichtungText() {
@@ -75,10 +140,12 @@ function updateSeitenText() {
 
 function updatePreisText() {
   p_out.textContent = `${preis.value} ct`;
+  updateChart();
 }
 
 function updateGrundpreisText() {
   g_out.textContent = `${grundpreis.value} €`;
+  updateChart();
 }
 
 // Empfehlung
