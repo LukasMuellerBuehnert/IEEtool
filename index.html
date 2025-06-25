@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>IEE Beratungstool</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="manifest" href="manifest.json" />
   <meta name="theme-color" content="#0ea5e9" />
 </head>
@@ -46,6 +47,9 @@
     <!-- Empfehlungen -->
     <div id="empfehlung" class="p-3 bg-gray-800 rounded text-sm"></div>
 
+    <canvas id="kostenChart" class="w-full bg-white rounded" height="200"></canvas>
+    <div class="text-sm text-blue-300 mt-2" id="kostenTexte"></div>
+    
     <!-- Picker -->
     <!-- Module -->
     <div>
