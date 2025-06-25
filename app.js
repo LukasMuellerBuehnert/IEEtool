@@ -1,33 +1,23 @@
 // Konstanten
 const ausrTbl = [
-  ["Nordost", 1.7],
-  ["Ost", 1.5],
-  ["Südost", 1.3],
-  ["Süd", 1.2],
-  ["Südwest", 1.3],
-  ["West", 1.5],
-  ["Nordwest", 1.7]
+  ["Nordost", 1.7], ["Ost", 1.5], ["Südost", 1.3],
+  ["Süd", 1.2], ["Südwest", 1.3], ["West", 1.5], ["Nordwest", 1.7]
 ];
-
 const seitenTbl = [
-  ["1 Seite", 0.65],
-  ["2 Seiten", 0.55],
-  ["3 Seiten", 0.45]
+  ["1 Seite", 0.65], ["2 Seiten", 0.55], ["3 Seiten", 0.45]
 ];
-
 const modulleistung = 450;
 const modulpreis = 251;
 const steigerung = 1.04;
 
-let daten;
-let chart;
+let daten, chart;
 
 fetch('preise.json')
   .then(res => res.json())
   .then(json => {
     daten = json;
     initPicker();
-    updateSpeicherText();
+    updateSpeicherText(); // initial auch WR
     updateVerbrauchText();
     updateAusrichtungText();
     updateSeitenText();
@@ -36,23 +26,23 @@ fetch('preise.json')
   });
 
 function initPicker() {
-  // Speicher
-  Object.keys(daten.alphaSpeicher).forEach(key => {
-    const o = document.createElement("option");
-    o.value = o.text = `Alpha ${key}`;
-    speicherwahl.appendChild(o);
+  Object.keys(daten.alphaSpeicher).forEach(k => {
+    const opt = document.createElement("option");
+    opt.value = `Alpha ${k}`;
+    opt.text = `Alpha ${k}`;
+    speicherwahl.appendChild(opt);
   });
-  Object.keys(daten.smaSpeicher).forEach(key => {
-    const o = document.createElement("option");
-    o.value = o.text = `Sma ${key}`;
-    speicherwahl.appendChild(o);
+  Object.keys(daten.smaSpeicher).forEach(k => {
+    const opt = document.createElement("option");
+    opt.value = `Sma ${k}`;
+    opt.text = `Sma ${k}`;
+    speicherwahl.appendChild(opt);
   });
 
-  // Modulmenge
   for (let i = 5; i <= 56; i++) {
-    const o = document.createElement("option");
-    o.value = o.text = i;
-    modulmenge.appendChild(o);
+    const opt = document.createElement("option");
+    opt.value = opt.text = i;
+    modulmenge.appendChild(opt);
   }
 }
 
@@ -91,27 +81,24 @@ function updateChart() {
     options: {
       responsive: true,
       scales: {
-      x: {
-        ticks: { color: "#ffffff" },
-        grid: { color: "rgba(255,255,255,0.2)" },
-        title: { display: true, text: "Jahre", color: "#ffffff" }
-      },
-      y: {
-        ticks: { color: "#ffffff" },
-        grid: { color: "rgba(255,255,255,0.2)" },
-        title: { display: true, text: "Kosten in €", color: "#ffffff" }
-      }
-    },
-    plugins: {
-      legend: {
-        labels: {
-          color: "#ffffff"
+        x: {
+          ticks: { color: "#ffffff" },
+          grid: { color: "rgba(255,255,255,0.2)" },
+          title: { display: true, text: "Jahre", color: "#ffffff" }
+        },
+        y: {
+          ticks: { color: "#ffffff" },
+          grid: { color: "rgba(255,255,255,0.2)" },
+          title: { display: true, text: "Kosten in €", color: "#ffffff" }
         }
       },
-      tooltip: {
-        titleColor: "#000000",
-        bodyColor: "#000000",
-        backgroundColor: "#ffffff"
+      plugins: {
+        legend: { labels: { color: "#ffffff" } },
+        tooltip: {
+          titleColor: "#000000",
+          bodyColor: "#000000",
+          backgroundColor: "#ffffff"
+        }
       }
     }
   });
@@ -128,24 +115,20 @@ function updateVerbrauchText() {
   updateEmpfehlung();
   updateChart();
 }
-
 function updateAusrichtungText() {
   const a = +ausrichtung.value;
   a_out.textContent = `${ausrTbl[a][0]} (${ausrTbl[a][1]})`;
   updateEmpfehlung();
 }
-
 function updateSeitenText() {
   const s = +seiten.value;
   s_out.textContent = `${seitenTbl[s][0]} (${seitenTbl[s][1]})`;
   updateEmpfehlung();
 }
-
 function updatePreisText() {
   p_out.textContent = `${preis.value} ct`;
   updateChart();
 }
-
 function updateGrundpreisText() {
   g_out.textContent = `${grundpreis.value} €`;
   updateChart();
@@ -159,7 +142,6 @@ function updateEmpfehlung() {
   const skoeff = seitenTbl[s][1];
   const module = Math.ceil(v * mkoeff / modulleistung);
   const speicher = Math.ceil((v / 365) * skoeff);
-
   empfehlung.innerHTML = `
     <p>Empfohlene Module: <strong>${module}</strong></p>
     <p>Empfohlene Speichermenge: <strong>${speicher} kWh</strong></p>
@@ -174,29 +156,28 @@ function updateModulText() {
 }
 
 function updateSpeicherText() {
-  const speicherwahlwert = speicherwahl.value || "Alpha 3.65";
-  const typ = speicherwahlwert.startsWith("Alpha") ? "alphaSpeicher" : "smaSpeicher";
-  const key = speicherwahlwert.split(" ")[1];
+  const [typ, kapaz] = speicherwahl.value.split(" ");
+  const speicherKey = typ.toLowerCase() + "Speicher";
+  const wrKey = typ.toLowerCase() + "Wechselrichter";
 
-  // Wechselrichterliste aktualisieren
+  speicherpreis_out.textContent = `${(daten[speicherKey][kapaz] || 0).toFixed(2)} €`;
+
+  // WR-Picker aktualisieren
   wechselrichterwahl.innerHTML = "";
-  const wrTyp = speicherwahlwert.startsWith("Alpha") ? daten.alphaWechselrichter : daten.smaWechselrichter;
-  Object.keys(wrTyp).forEach(name => {
+  Object.keys(daten[wrKey]).forEach(name => {
     const o = document.createElement("option");
     o.value = o.text = name;
     wechselrichterwahl.appendChild(o);
   });
 
-  speicherpreis_out.textContent = `${(daten[typ][key] || 0).toFixed(2)} €`;
   updateWechselrichterText();
 }
 
 function updateWechselrichterText() {
-  const speicherwahlwert = speicherwahl.value || "Alpha 3.65";
-  const typ = speicherwahlwert.startsWith("Alpha") ? "alphaWechselrichter" : "smaWechselrichter";
+  const [typ] = speicherwahl.value.split(" ");
+  const wrKey = typ.toLowerCase() + "Wechselrichter";
   const wr = wechselrichterwahl.value;
-  const preis = daten[typ][wr] || 0;
-  wechselrichterpreis_out.textContent = `${preis.toFixed(2)} €`;
+  wechselrichterpreis_out.textContent = `${(daten[wrKey][wr] || 0).toFixed(2)} €`;
   updatePreise();
 }
 
@@ -204,23 +185,17 @@ function updatePreise() {
   const modulauswahl = +modulmenge.value || 0;
   const modulkosten = modulauswahl * modulpreis;
 
-  const speicherwahlwert = speicherwahl.value || "Alpha 3.65";
-  const speichertyp = speicherwahlwert.startsWith("Alpha") ? "alphaSpeicher" : "smaSpeicher";
-  const key = speicherwahlwert.split(" ")[1];
-  const speicherpreis = daten[speichertyp][key] || 0;
-
-  const wrTyp = speicherwahlwert.startsWith("Alpha") ? "alphaWechselrichter" : "smaWechselrichter";
-  const wechselrichterpreis = daten[wrTyp][wechselrichterwahl.value] || 0;
+  const [typ, kapaz] = speicherwahl.value.split(" ");
+  const speicherpreis = daten[typ.toLowerCase() + "Speicher"][kapaz] || 0;
+  const wechselrichterpreis = daten[typ.toLowerCase() + "Wechselrichter"][wechselrichterwahl.value] || 0;
 
   let zusatzBrutto = 0;
   let zusatzNetto = 0;
   document.querySelectorAll("input[type=checkbox]").forEach(cb => {
     if (cb.checked) {
-      if (cb.value === "Potentialausgleich") {
-        zusatzNetto += daten.zusatzleistungen[cb.value];
-      } else {
-        zusatzBrutto += daten.zusatzleistungen[cb.value];
-      }
+      const preis = daten.zusatzleistungen[cb.value] || 0;
+      if (cb.value === "Potentialausgleich") zusatzNetto += preis;
+      else zusatzBrutto += preis;
     }
   });
 
@@ -235,6 +210,7 @@ function updatePreise() {
   `;
 }
 
+// Event-Listener
 verbrauch.addEventListener("input", updateVerbrauchText);
 ausrichtung.addEventListener("input", updateAusrichtungText);
 seiten.addEventListener("input", updateSeitenText);
@@ -243,6 +219,6 @@ grundpreis.addEventListener("input", updateGrundpreisText);
 modulmenge.addEventListener("change", updateModulText);
 speicherwahl.addEventListener("change", updateSpeicherText);
 wechselrichterwahl.addEventListener("change", updateWechselrichterText);
-document.querySelectorAll("input[type=checkbox]").forEach(cb => {
-  cb.addEventListener("change", updatePreise);
-});
+document.querySelectorAll("input[type=checkbox]").forEach(cb =>
+  cb.addEventListener("change", updatePreise)
+);
