@@ -1,47 +1,82 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>IEE Beratungstool</title>
-  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#0ea5e9" />
 </head>
-<body class="bg-gray-900 text-gray-200">
-  <div class="container mx-auto p-4 max-w-md">
-    <h1 class="text-xl mb-4">IEE Beratungstool</h1>
+<body class="bg-gray-900 text-white font-sans">
+  <div class="max-w-md mx-auto p-4 space-y-6">
+    <h1 class="text-xl font-bold text-center">IEE Beratungstool</h1>
 
-    <label class="block mb-2">Verbrauch (kWh):
-      <input type="range" id="verbrauch" min="2000" max="20000">
-      <span id="verbrWert">?</span>
-    </label>
-
-    <label class="block mb-2">Ausrichtung:
-      <input type="range" id="ausrichtung" min="0" max="6">
-      <span id="ausrIch">?</span>
-    </label>
-
-    <label class="block mb-2">Belegte Seiten:
-      <input type="range" id="seiten" min="0" max="2">
-      <span id="seitenIch">?</span>
-    </label>
-
-    <label class="block mb-2">Preis pro kWh (ct):
-      <input type="range" id="preis_kwh" min="20" max="50">
-      <span id="preisWert">?</span>
-    </label>
-
-    <label class="block mb-4">Grundpreis pro Jahr (€):
-      <input type="range" id="grundpreis" min="70" max="250">
-      <span id="grundWert">?</span>
-    </label>
-
-    <button id="calc" class="bg-blue-500 text-white px-4 py-2 rounded mb-4">Berechnen</button>
-
-    <h2 class="text-lg mb-2">Ergebnis</h2>
-    <div id="ergebnis" class="bg-gray-800 p-4 rounded space-y-1">
-      <!-- Ausgabe hier -->
+    <!-- Slider-Bereich -->
+    <div>
+      <label for="verbrauch" class="block">Verbrauch (kWh/Jahr)</label>
+      <input id="verbrauch" type="range" min="2000" max="20000" value="4000" class="w-full">
+      <p id="v_out" class="text-sm text-blue-300"></p>
     </div>
+
+    <div>
+      <label for="ausrichtung" class="block">Ausrichtung</label>
+      <input id="ausrichtung" type="range" min="0" max="6" value="3" class="w-full">
+      <p id="a_out" class="text-sm text-blue-300"></p>
+    </div>
+
+    <div>
+      <label for="seiten" class="block">Belegte Dachseiten</label>
+      <input id="seiten" type="range" min="0" max="2" value="0" class="w-full">
+      <p id="s_out" class="text-sm text-blue-300"></p>
+    </div>
+
+    <div>
+      <label for="preis" class="block">Preis pro kWh (ct)</label>
+      <input id="preis" type="range" min="20" max="50" value="30" class="w-full">
+      <p id="p_out" class="text-sm text-blue-300"></p>
+    </div>
+
+    <div>
+      <label for="grundpreis" class="block">Grundpreis/Jahr (€)</label>
+      <input id="grundpreis" type="range" min="70" max="250" value="120" class="w-full">
+      <p id="g_out" class="text-sm text-blue-300"></p>
+    </div>
+
+    <!-- Empfehlungen -->
+    <div id="empfehlung" class="p-3 bg-gray-800 rounded text-sm"></div>
+
+    <!-- Picker -->
+    <div>
+      <label for="modulmenge" class="block">Module</label>
+      <select id="modulmenge" class="text-black w-full"></select>
+    </div>
+
+    <div>
+      <label for="speicherwahl" class="block">Speicher</label>
+      <select id="speicherwahl" class="text-black w-full"></select>
+    </div>
+
+    <div>
+      <label for="wechselrichterwahl" class="block">Wechselrichter</label>
+      <select id="wechselrichterwahl" class="text-black w-full"></select>
+    </div>
+
+    <!-- Zusatzleistungen -->
+    <fieldset class="space-y-2">
+      <legend class="font-semibold">Zusatzleistungen</legend>
+      <label><input type="checkbox" class="mr-2" value="Garantie"> Garantieverlängerung (990 € inkl.)</label><br>
+      <label><input type="checkbox" class="mr-2" value="Fernwartung"> Fernwartung (350 € inkl.)</label><br>
+      <label><input type="checkbox" class="mr-2" value="Montage"> Montagekostengarantie (0 €)</label><br>
+      <label><input type="checkbox" class="mr-2" value="Wallbox"> Wallbox (2200 € inkl.)</label><br>
+      <label><input type="checkbox" class="mr-2" value="Netzersatz"> Netzersatzbetrieb (2199 € inkl.)</label><br>
+      <label><input type="checkbox" class="mr-2" value="Potentialausgleich"> Potentialausgleichsschiene (1100 € exkl.)</label>
+    </fieldset>
+
+    <!-- Preisbereich -->
+    <div id="preisbereich" class="mt-4 bg-gray-800 p-4 rounded text-sm"></div>
   </div>
+
   <script src="app.js"></script>
 </body>
 </html>
