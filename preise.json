@@ -1,0 +1,52 @@
+{
+  "modul": {
+    "bezeichnung": "Bauer Solar 445 WP GG Pure",
+    "leistungWp": 445,
+    "preisProModul": 155,
+    "dcMontageProkWp": 240
+  },
+  "alphaSpeicher": {
+    "3.65": 1630,
+    "7.3": 3260,
+    "10.95": 4910,
+    "14.6": 6390,
+    "18.25": 7870,
+    "21.9": 9270
+  },
+  "alphaWR": {
+    "4": 1700,
+    "6": 1790,
+    "8": 2250,
+    "10": 2690,
+    "20": 3500
+  },
+  "smaSpeicher": {
+    "6.56": 3760,
+    "9.84": 5260,
+    "13.13": 7060,
+    "16.4": 8760
+  },
+  "smaWR": {
+    "5": 1900,
+    "6": 2000,
+    "8": 2360,
+    "10": 3090
+  },
+  "pauschalen": {
+    "elektroinstallation": 2990,
+    "ueberspannungsschutz": 389,
+    "hebetechnik": 750,
+    "energiemanagement": 490,
+    "inbetriebnahme": 499,
+    "montagegarantie": 0,
+    "summe": 5118
+  },
+  "zusatzleistungen": {
+    "garantie": 990,
+    "fernwartung": 350,
+    "montagegarantie": 0,
+    "wallbox": 2199,
+    "netzersatz": 2200,
+    "potentialausgleich": 1100
+  }
+}
