@@ -1,4 +1,4 @@
-// Tabellen und Konstanten
+// Konstanten
 const ausrTbl = [
   ["Nordost", 1.7],
   ["Ost", 1.5],
@@ -19,58 +19,52 @@ const modulleistung = 450;
 const modulpreis = 251;
 const steigerung = 1.04;
 
-const speicherpreise = {
-  "Alpha 3.65": 2700,
-  "Alpha 7.3": 4500,
-  "Alpha 10.9": 6200,
-  "Alpha 14.6": 7800,
-  "Alpha 18.4": 9200,
-  "Alpha 22.1": 10600,
-  "Sma 6.6": 4300,
-  "Sma9.9": 6100,
-  "Sma13.2": 7700,
-  "Sma16.5": 9300
-};
-
-const wechselrichterpreise = {
-  Alpha: {
-    "Alpha 4": 1700,
-    "Alpha6": 2100,
-    "Alpha8": 2500,
-    "Alpha10": 2900,
-    "Alpha20": 3900
-  },
-  Sma: {
-    "Sma6": 1800,
-    "Sma8": 2200,
-    "Sma10": 2600
-  }
-};
-
-const zusatzleistungen = {
-  Garantie: 990,
-  Fernwartung: 350,
-  Montage: 0,
-  Wallbox: 2200,
-  Netzersatz: 2199,
-  Potentialausgleich: 1100
-};
-
+let daten;
 let chart;
 
-function updateChart() {
-  const kosten1Jahr = +verbrauch.value * (+preis.value / 100) + +grundpreis.value;
-  const jahre = Array.from({ length: 21 }, (_, i) => i); // 0 bis 20
-  const kostenProJahr = jahre.map(j =>
-    kostenErstesJahr * Math.pow(steigerung, j)
-  );
+fetch('preise.json')
+  .then(res => res.json())
+  .then(json => {
+    daten = json;
+    initPicker();
+    updateSpeicherText();
+    updateVerbrauchText();
+    updateAusrichtungText();
+    updateSeitenText();
+    updatePreisText();
+    updateGrundpreisText();
+  });
 
+function initPicker() {
+  // Speicher
+  Object.keys(daten.alphaSpeicher).forEach(key => {
+    const o = document.createElement("option");
+    o.value = o.text = `Alpha ${key}`;
+    speicherwahl.appendChild(o);
+  });
+  Object.keys(daten.smaSpeicher).forEach(key => {
+    const o = document.createElement("option");
+    o.value = o.text = `Sma ${key}`;
+    speicherwahl.appendChild(o);
+  });
+
+  // Modulmenge
+  for (let i = 5; i <= 56; i++) {
+    const o = document.createElement("option");
+    o.value = o.text = i;
+    modulmenge.appendChild(o);
+  }
+}
+
+function updateChart() {
+  const kostenErstesJahr = +verbrauch.value * (+preis.value / 100) + +grundpreis.value;
+  const jahre = Array.from({ length: 21 }, (_, i) => i);
+  const kostenProJahr = jahre.map(j => kostenErstesJahr * Math.pow(steigerung, j));
   const kumulierteKosten = jahre.map(j =>
     (kostenErstesJahr / Math.log(steigerung)) * (Math.pow(steigerung, j + 1) - 1)
   );
 
-  if (chart) chart.destroy(); // Vorherige Version entfernen
-
+  if (chart) chart.destroy();
   const ctx = document.getElementById("kostenChart").getContext("2d");
   chart = new Chart(ctx, {
     type: "line",
@@ -97,29 +91,19 @@ function updateChart() {
     options: {
       responsive: true,
       scales: {
-        x: {
-          title: { display: true, text: "Jahre" }
-        },
-        y: {
-          title: { display: true, text: "Kosten in €" },
-          beginAtZero: true
-        }
+        x: { title: { display: true, text: "Jahre" } },
+        y: { title: { display: true, text: "Kosten in €" }, beginAtZero: true }
       }
     }
   });
 
-  const k10 = kumulierteKosten[10].toFixed(0);
-  const k20 = kumulierteKosten[20].toFixed(0);
-  const kj = kostenErstesJahr.toFixed(0);
-
   kostenTexte.innerHTML = `
-    <p>Aktuelle jährliche Stromkosten: <strong>${kj} €</strong></p>
-    <p>Kumulierte Kosten in 10 Jahren: <strong>${k10} €</strong></p>
-    <p>Kumulierte Kosten in 20 Jahren: <strong>${k20} €</strong></p>
+    <p>Aktuelle jährliche Stromkosten: <strong>${kostenErstesJahr.toFixed(0)} €</strong></p>
+    <p>Kumulierte Kosten in 10 Jahren: <strong>${kumulierteKosten[10].toFixed(0)} €</strong></p>
+    <p>Kumulierte Kosten in 20 Jahren: <strong>${kumulierteKosten[20].toFixed(0)} €</strong></p>
   `;
 }
 
-// Textausgabe-Funktionen
 function updateVerbrauchText() {
   v_out.textContent = `${verbrauch.value} kWh`;
   updateEmpfehlung();
@@ -148,7 +132,6 @@ function updateGrundpreisText() {
   updateChart();
 }
 
-// Empfehlung
 function updateEmpfehlung() {
   const v = +verbrauch.value;
   const a = +ausrichtung.value;
@@ -164,7 +147,6 @@ function updateEmpfehlung() {
   `;
 }
 
-// Picker
 function updateModulText() {
   const anzahl = +modulmenge.value || 0;
   const preis = anzahl * modulpreis;
@@ -174,48 +156,51 @@ function updateModulText() {
 
 function updateSpeicherText() {
   const speicherwahlwert = speicherwahl.value || "Alpha 3.65";
-  const typ = speicherwahlwert.startsWith("Alpha") ? "Alpha" : "Sma";
+  const typ = speicherwahlwert.startsWith("Alpha") ? "alphaSpeicher" : "smaSpeicher";
+  const key = speicherwahlwert.split(" ")[1];
 
   // Wechselrichterliste aktualisieren
   wechselrichterwahl.innerHTML = "";
-  Object.keys(wechselrichterpreise[typ]).forEach(name => {
+  const wrTyp = speicherwahlwert.startsWith("Alpha") ? daten.alphaWechselrichter : daten.smaWechselrichter;
+  Object.keys(wrTyp).forEach(name => {
     const o = document.createElement("option");
     o.value = o.text = name;
     wechselrichterwahl.appendChild(o);
   });
 
-  speicherpreis_out.textContent = `${(speicherpreise[speicherwahlwert] || 0).toFixed(2)} €`;
-
-  updateWechselrichterText(); // ruft updatePreise intern
+  speicherpreis_out.textContent = `${(daten[typ][key] || 0).toFixed(2)} €`;
+  updateWechselrichterText();
 }
 
 function updateWechselrichterText() {
   const speicherwahlwert = speicherwahl.value || "Alpha 3.65";
-  const typ = speicherwahlwert.startsWith("Alpha") ? "Alpha" : "Sma";
+  const typ = speicherwahlwert.startsWith("Alpha") ? "alphaWechselrichter" : "smaWechselrichter";
   const wr = wechselrichterwahl.value;
-  const preis = wechselrichterpreise[typ][wr] || 0;
+  const preis = daten[typ][wr] || 0;
   wechselrichterpreis_out.textContent = `${preis.toFixed(2)} €`;
-
   updatePreise();
 }
 
-// Preis
 function updatePreise() {
   const modulauswahl = +modulmenge.value || 0;
   const modulkosten = modulauswahl * modulpreis;
 
-  const speicherpreis = speicherpreise[speicherwahl.value] || 0;
-  const typ = speicherwahl.value?.startsWith("Alpha") ? "Alpha" : "Sma";
-  const wechselrichterpreis = wechselrichterpreise[typ][wechselrichterwahl.value] || 0;
+  const speicherwahlwert = speicherwahl.value || "Alpha 3.65";
+  const speichertyp = speicherwahlwert.startsWith("Alpha") ? "alphaSpeicher" : "smaSpeicher";
+  const key = speicherwahlwert.split(" ")[1];
+  const speicherpreis = daten[speichertyp][key] || 0;
+
+  const wrTyp = speicherwahlwert.startsWith("Alpha") ? "alphaWechselrichter" : "smaWechselrichter";
+  const wechselrichterpreis = daten[wrTyp][wechselrichterwahl.value] || 0;
 
   let zusatzBrutto = 0;
   let zusatzNetto = 0;
   document.querySelectorAll("input[type=checkbox]").forEach(cb => {
     if (cb.checked) {
       if (cb.value === "Potentialausgleich") {
-        zusatzNetto += zusatzleistungen[cb.value];
+        zusatzNetto += daten.zusatzleistungen[cb.value];
       } else {
-        zusatzBrutto += zusatzleistungen[cb.value];
+        zusatzBrutto += daten.zusatzleistungen[cb.value];
       }
     }
   });
@@ -231,37 +216,14 @@ function updatePreise() {
   `;
 }
 
-// Initialisierung Dropdowns
-for (let i = 5; i <= 56; i++) {
-  const o = document.createElement("option");
-  o.value = o.text = i;
-  modulmenge.appendChild(o);
-}
-Object.keys(speicherpreise).forEach(name => {
-  const o = document.createElement("option");
-  o.value = o.text = name;
-  speicherwahl.appendChild(o);
-}
-);
-updateSpeicherText(); // auch für WR
-
-// Event-Listener
 verbrauch.addEventListener("input", updateVerbrauchText);
 ausrichtung.addEventListener("input", updateAusrichtungText);
 seiten.addEventListener("input", updateSeitenText);
 preis.addEventListener("input", updatePreisText);
 grundpreis.addEventListener("input", updateGrundpreisText);
-
 modulmenge.addEventListener("change", updateModulText);
 speicherwahl.addEventListener("change", updateSpeicherText);
 wechselrichterwahl.addEventListener("change", updateWechselrichterText);
 document.querySelectorAll("input[type=checkbox]").forEach(cb => {
   cb.addEventListener("change", updatePreise);
 });
-
-// Initialer Aufruf
-updateVerbrauchText();
-updateAusrichtungText();
-updateSeitenText();
-updatePreisText();
-updateGrundpreisText();
