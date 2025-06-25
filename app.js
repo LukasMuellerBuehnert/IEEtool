@@ -91,8 +91,27 @@ function updateChart() {
     options: {
       responsive: true,
       scales: {
-        x: { title: { display: true, text: "Jahre" } },
-        y: { title: { display: true, text: "Kosten in €" }, beginAtZero: true }
+      x: {
+        ticks: { color: "#ffffff" },
+        grid: { color: "rgba(255,255,255,0.2)" },
+        title: { display: true, text: "Jahre", color: "#ffffff" }
+      },
+      y: {
+        ticks: { color: "#ffffff" },
+        grid: { color: "rgba(255,255,255,0.2)" },
+        title: { display: true, text: "Kosten in €", color: "#ffffff" }
+      }
+    },
+    plugins: {
+      legend: {
+        labels: {
+          color: "#ffffff"
+        }
+      },
+      tooltip: {
+        titleColor: "#000000",
+        bodyColor: "#000000",
+        backgroundColor: "#ffffff"
       }
     }
   });
