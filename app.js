@@ -6,12 +6,14 @@ const ausrichtung = document.getElementById("ausrichtung");
 const seiten = document.getElementById("seiten");
 const preis = document.getElementById("preis");
 const grundpreis = document.getElementById("grundpreis");
+const tagSlider = document.getElementById("tagSlider");
 
 const v_out = document.getElementById("v_out");
 const a_out = document.getElementById("a_out");
 const s_out = document.getElementById("s_out");
 const p_out = document.getElementById("p_out");
 const g_out = document.getElementById("g_out");
+const tag_out = document.getElementById("tag_out");
 
 const modulmenge = document.getElementById("modulmenge");
 const speicherwahl = document.getElementById("speicherwahl");
@@ -44,7 +46,7 @@ fetch('preise.json')
     daten = json;
     initPicker();
     initSliderTexte();
-    calcRenderAllGraphs(4000, 10, 6);    // z. B. beim Laden oder bei einer Änderung
+    calcRenderAllGraphs(4000, 10, 6, +tagSlider.value);   
     //updateSpeicherText(); // initial auch WR
     /*
     updateVerbrauchText();
@@ -159,7 +161,8 @@ function updateVerbrauchText() {
   v_out.textContent = `${verbrauch.value} kWh`;
   updateEmpfehlung();
   updateChart();
-  updateHTWFrame()
+  updateHTWFrame();
+  calcRenderAllGraphs(+verbrauch.value, +leistung.value, +speicher.value, +tagSlider.value);
 }
 function updateAusrichtungText() {
   const a = +ausrichtung.value;
@@ -201,7 +204,8 @@ function updateModulText() {
   const preis = anzahl * modulpreis;
   modulpreis_out.textContent = `${preis.toFixed(2)} €`;
   updatePreise();
-  updateHTWFrame()
+  updateHTWFrame();
+  calcRenderAllGraphs(+verbrauch.value, +leistung.value, +speicher.value, +tagSlider.value);
 }
 
 function updateSpeicherText() {
@@ -219,7 +223,8 @@ function updateSpeicherText() {
     wechselrichterwahl.appendChild(o);
   });
   updatePreise();
-  updateHTWFrame()
+  updateHTWFrame();
+  calcRenderAllGraphs(+verbrauch.value, +leistung.value, +speicher.value, +tagSlider.value);
 }
 
 function updateWechselrichterText() {
@@ -284,3 +289,7 @@ wechselrichterwahl.addEventListener("change", updateWechselrichterText);
 document.querySelectorAll("input[type=checkbox]").forEach(cb =>
   cb.addEventListener("change", updatePreise)
 );
+tagSlider.addEventListener("input", () => {
+  tag_out.textContent = `Tag: ${tagSlider.value}`;
+  calcRenderDailyGraph(+verbrauch.value, +leistung.value, +speicher.value, +tagSlider.value);
+});
