@@ -71,6 +71,8 @@ function initPicker() {
 }
 
 function updateChart() {
+  document.getElementById("chartContainer").classList.remove("hidden");
+  
   const kostenErstesJahr = +verbrauch.value * (+preis.value / 100) + +grundpreis.value;
   const jahre = Array.from({ length: 21 }, (_, i) => i);
   const kostenProJahr = jahre.map(j => kostenErstesJahr * Math.pow(steigerung, j));
