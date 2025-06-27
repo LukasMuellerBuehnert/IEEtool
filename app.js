@@ -223,7 +223,8 @@ function updatePreise() {
     }
   });
 
-  const gesamtNetto = modulkosten + speicherpreis + wechselrichterpreis + zusatzNetto;
+  const pauschalen = daten.pauschalen.pauschalenSumme || 0;
+  const gesamtNetto = modulkosten + speicherpreis + wechselrichterpreis + pauschalen + zusatzNetto;
   const mwst = zusatzBrutto * 0.19 + zusatzNetto;
   const gesamtBrutto = zusatzBrutto + gesamtNetto;
 
