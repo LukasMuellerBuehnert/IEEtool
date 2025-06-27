@@ -161,6 +161,8 @@ function updateGrundpreisText() {
 }
 
 function updateEmpfehlung() {
+  document.getElementById("empfehlung").classList.remove("hidden");
+  
   const v = +verbrauch.value;
   const a = +ausrichtung.value;
   const s = +seiten.value;
