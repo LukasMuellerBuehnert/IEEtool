@@ -53,6 +53,10 @@ fetch('preise.json')
   });
 
 function initPicker() {
+  speicherwahl.appendChild(new Option("Bitte wählen", ""));
+  wechselrichterwahl.appendChild(new Option("Bitte erst Speicher wählen", ""));
+  modulmenge.appendChild(new Option("Bitte wählen", ""));
+  
   Object.keys(daten.alphaSpeicher).forEach(k => {
     const opt = document.createElement("option");
     opt.value = `Alpha ${k}`;
