@@ -42,11 +42,13 @@ fetch('preise.json')
     daten = json;
     initPicker();
     updateSpeicherText(); // initial auch WR
+    /*
     updateVerbrauchText();
     updateAusrichtungText();
     updateSeitenText();
     updatePreisText();
     updateGrundpreisText();
+    */
   });
 
 function initPicker() {
