@@ -1,3 +1,27 @@
+// DOM referenzen
+const verbrauch = document.getElementById("verbrauch");
+const ausrichtung = document.getElementById("ausrichtung");
+const seiten = document.getElementById("seiten");
+const preis = document.getElementById("preis");
+const grundpreis = document.getElementById("grundpreis");
+
+const v_out = document.getElementById("v_out");
+const a_out = document.getElementById("a_out");
+const s_out = document.getElementById("s_out");
+const p_out = document.getElementById("p_out");
+const g_out = document.getElementById("g_out");
+
+const modulmenge = document.getElementById("modulmenge");
+const speicherwahl = document.getElementById("speicherwahl");
+const wechselrichterwahl = document.getElementById("wechselrichterwahl");
+
+const modulpreis_out = document.getElementById("modulpreis_out");
+const speicherpreis_out = document.getElementById("speicherpreis_out");
+const wechselrichterpreis_out = document.getElementById("wechselrichterpreis_out");
+
+const preisbereich = document.getElementById("preisbereich");
+const empfehlung = document.getElementById("empfehlung");
+const kostenTexte = document.getElementById("kostenTexte");
 // Konstanten
 const ausrTbl = [
   ["Nordost", 1.7], ["Ost", 1.5], ["Südost", 1.3],
