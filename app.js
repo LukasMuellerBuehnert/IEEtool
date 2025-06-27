@@ -121,7 +121,7 @@ function updateChart() {
         tooltip: {
           titleColor: "#000000",
           bodyColor: "#000000",
-          backgroundColor: "#ffffff"
+          backgroundColor: "#1F2937"
         }
       }
     }
