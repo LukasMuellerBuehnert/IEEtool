@@ -156,6 +156,7 @@ function updateVerbrauchText() {
   v_out.textContent = `${verbrauch.value} kWh`;
   updateEmpfehlung();
   updateChart();
+  updateHTWFrame()
 }
 function updateAusrichtungText() {
   const a = +ausrichtung.value;
@@ -197,6 +198,7 @@ function updateModulText() {
   const preis = anzahl * modulpreis;
   modulpreis_out.textContent = `${preis.toFixed(2)} €`;
   updatePreise();
+  updateHTWFrame()
 }
 
 function updateSpeicherText() {
@@ -214,6 +216,7 @@ function updateSpeicherText() {
     wechselrichterwahl.appendChild(o);
   });
   updatePreise();
+  updateHTWFrame()
 }
 
 function updateWechselrichterText() {
@@ -252,6 +255,18 @@ function updatePreise() {
     <p>inkl. MwSt: ${mwst.toFixed(2)} €</p>
     <p class="font-semibold text-lg">Gesamtbetrag: ${(gesamtBrutto + mwst).toFixed(2)} €</p>
   `;
+}
+
+function updateHTWFrame() {
+  const v = +verbrauch.value || 4000;
+  const module = +modulmenge.value || 0;
+  const pv = (module * modulleistung / 1000).toFixed(1); // z. B. 18 Module * 450 W = 8.1 kWp
+
+  const [typ, kapaz] = speicherwahl.value.split(" ");
+  const bat = parseFloat(kapaz) || 0;
+
+  const url = `https://solar.htw-berlin.de/rechner/unabhaengigkeitsrechner/?load=${v}&pv=${pv}&bat=${bat}`;
+  document.getElementById("htwFrame").src = url;
 }
 
 // Event-Listener
