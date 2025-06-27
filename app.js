@@ -41,6 +41,7 @@ fetch('preise.json')
   .then(json => {
     daten = json;
     initPicker();
+    initSliderTexte();
     updateSpeicherText(); // initial auch WR
     /*
     updateVerbrauchText();
@@ -70,6 +71,14 @@ function initPicker() {
     opt.value = opt.text = i;
     modulmenge.appendChild(opt);
   }
+}
+
+function initSliderTexte(){
+  v_out.textContent = `${verbrauch.value} kWh`;
+  a_out.textContent = `${ausrTbl[+ausrichtung.value][0]} (${ausrTbl[+ausrichtung.value][1]})`;
+  s_out.textContent = `${seitenTbl[+seiten.value][0]} (${seitenTbl[+seiten.value][1]})`;
+  p_out.textContent = `${preis.value} ct`;
+  g_out.textContent = `${grundpreis.value} €`;
 }
 
 function updateChart() {
