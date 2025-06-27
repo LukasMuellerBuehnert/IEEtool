@@ -213,8 +213,7 @@ function updateSpeicherText() {
     o.value = o.text = name;
     wechselrichterwahl.appendChild(o);
   });
-
-  updateWechselrichterText();
+  updatePreise();
 }
 
 function updateWechselrichterText() {
