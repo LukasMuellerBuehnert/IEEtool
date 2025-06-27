@@ -1,3 +1,5 @@
+import { calcRenderAllGraphs, calcRenderDailyGraph } from './simulationControl.js';
+
 // DOM referenzen
 const verbrauch = document.getElementById("verbrauch");
 const ausrichtung = document.getElementById("ausrichtung");
@@ -42,6 +44,7 @@ fetch('preise.json')
     daten = json;
     initPicker();
     initSliderTexte();
+    calcRenderAllGraphs(4000, 10, 6);    // z. B. beim Laden oder bei einer Änderung
     //updateSpeicherText(); // initial auch WR
     /*
     updateVerbrauchText();
