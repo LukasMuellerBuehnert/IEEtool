@@ -42,7 +42,7 @@ fetch('preise.json')
     daten = json;
     initPicker();
     initSliderTexte();
-    updateSpeicherText(); // initial auch WR
+    //updateSpeicherText(); // initial auch WR
     /*
     updateVerbrauchText();
     updateAusrichtungText();
