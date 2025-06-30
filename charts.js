@@ -1,5 +1,17 @@
 // charts.js
 
+const charts = {};
+
+function createOrUpdateChart(id, config) {
+  if (charts[id]) {
+    charts[id].destroy();
+  }
+  const ctx = document.getElementById(id);
+  if (ctx) {
+    charts[id] = new Chart(ctx, config);
+  }
+}
+
 export function renderAutarkiePie(monatlich) {
   const summe = monatlich.reduce((a, b) => ({
     direkt: a.direkt + b.direkt,
@@ -7,7 +19,7 @@ export function renderAutarkiePie(monatlich) {
     bezug: a.bezug + b.bezug
   }), { direkt: 0, speicher: 0, bezug: 0 });
 
-  new Chart(document.getElementById("chartAutarkie"), {
+  createOrUpdateChart("chartAutarkie", {
     type: 'pie',
     data: {
       labels: ['Direkt', 'Speicher', 'Netzbezug'],
@@ -26,7 +38,7 @@ export function renderEigenverbrauchPie(monatlich) {
     einspeisung: (a.einspeisung || 0) + (b.einspeisung || 0)
   }), { direkt: 0, speicher: 0, einspeisung: 0 });
 
-  new Chart(document.getElementById("chartEigenverbrauch"), {
+  createOrUpdateChart("chartEigenverbrauch", {
     type: 'pie',
     data: {
       labels: ['Direktverbrauch', 'Speichernutzung', 'Einspeisung'],
@@ -41,7 +53,7 @@ export function renderEigenverbrauchPie(monatlich) {
 export function renderTagesStack(tagesprofil) {
   const labels = Array.from({ length: 24 }, (_, i) => i + 'h');
 
-  new Chart(document.getElementById("chartTagesverbrauch"), {
+  createOrUpdateChart("chartTagesverbrauch", {
     type: 'bar',
     data: {
       labels,
@@ -76,7 +88,7 @@ export function renderTagesStack(tagesprofil) {
 export function renderJahresStack(monatlich) {
   const labels = ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
 
-  new Chart(document.getElementById("chartJahresverbrauch"), {
+  createOrUpdateChart("chartJahresverbrauch", {
     type: 'bar',
     data: {
       labels,
@@ -112,7 +124,7 @@ export function renderAutarkieLine(monatlich) {
   const labels = ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
   const daten = monatlich.map(m => ((m.direkt + m.speicher) / (m.direkt + m.speicher + m.bezug)) * 100);
 
-  new Chart(document.getElementById("chartAutarkieVerlauf"), {
+  createOrUpdateChart("chartAutarkieVerlauf", {
     type: 'line',
     data: {
       labels,
@@ -139,7 +151,7 @@ export function renderAutarkieLine(monatlich) {
 export function renderJahresErtrag(monatlich) {
   const labels = ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
 
-  new Chart(document.getElementById("chartVerwertung"), {
+  createOrUpdateChart("chartVerwertung", {
     type: 'bar',
     data: {
       labels,
