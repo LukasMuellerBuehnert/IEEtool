@@ -263,13 +263,15 @@ function updatePreise() {
 }
 
 function calcInstalledPower() {
-  const module = +modulmenge.value || 0;
-  return (module * modulleistung) / 1000;
+  const module = +modulmenge.value;
+  return (module > 0 ? module : 10) * modulleistung / 1000;
 }
 
 function calcInstalledCapacity() {
   const [typ, kapaz] = (speicherwahl.value || "").split(" ");
-  return parseFloat(kapaz) || 0;
+  const fallback = 6;
+  const parsed = parseFloat(kapaz);
+  return isNaN(parsed) ? fallback : parsed;
 }
 
 // Event-Listener
