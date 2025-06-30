@@ -9,10 +9,13 @@
   <link rel="manifest" href="manifest.json" />
   <meta name="theme-color" content="#0ea5e9" />
 </head>
-<body class="relative bg-gray-900 text-white font-sans">
-  <!-- Hintergrundbild (zentral und ganz unten) -->
-  <div class="absolute inset-0 bg-center bg-no-repeat bg-cover z-0 opacity-10 pointer-events-none" style="background-image: url('pictures/background.jpg')"></div>
-
+<body class="bg-gray-900 text-white font-sans" style="
+  background-image: url('pictures/background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+">
   <!-- Hauptlayout mit linker Spalte, Hauptbereich und rechter Spalte -->
   <div class="flex min-h-screen relative overflow-hidden z-10">
     <!-- Linker Rand -->
