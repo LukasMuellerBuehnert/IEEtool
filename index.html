@@ -35,104 +35,106 @@
       </div>
     </div>
 
-    <div class="block lg:hidden w-full bg-gray-900/80 backdrop-blur-md"></div>
     
     <!-- Hauptbereich -->
-    <main class="flex-1 max-w-md mx-auto p-4 space-y-6 bg-gray-900/80 backdrop-blur-md">
-      <h1 class="text-xl font-bold text-center">IEE Beratungstool</h1>
-
-      <!-- Slider-Bereich -->
-      <div>
-        <label for="verbrauch" class="block">Verbrauch (kWh/Jahr)</label>
-        <input id="verbrauch" type="range" min="2000" max="20000" value="4000" class="w-full accent-blue-300">
-        <p id="v_out" class="text-sm text-blue-300"></p>
-      </div>
-
-      <div>
-        <label for="ausrichtung" class="block">Ausrichtung</label>
-        <input id="ausrichtung" type="range" min="0" max="6" value="3" class="w-full accent-blue-300">
-        <p id="a_out" class="text-sm text-blue-300"></p>
-      </div>
-
-      <div>
-        <label for="seiten" class="block">Belegte Dachseiten</label>
-        <input id="seiten" type="range" min="0" max="2" value="0" class="w-full accent-blue-300">
-        <p id="s_out" class="text-sm text-blue-300"></p>
-      </div>
-
-      <div>
-        <label for="preis" class="block">Preis pro kWh (ct)</label>
-        <input id="preis" type="range" min="20" max="50" value="30" class="w-full accent-blue-300">
-        <p id="p_out" class="text-sm text-blue-300"></p>
-      </div>
-
-      <div>
-        <label for="grundpreis" class="block">Grundpreis/Jahr (€)</label>
-        <input id="grundpreis" type="range" min="70" max="250" value="120" class="w-full accent-blue-300">
-        <p id="g_out" class="text-sm text-blue-300"></p>
-      </div>
-
-      <!-- Empfehlungen -->
-      <div id="empfehlung" class="hidden p-3 bg-gray-800 rounded text-sm"></div>
-
-      <!-- Chart -->
-      <div id="chartContainer" class="hidden mt-6">
-        <canvas id="kostenChart" class="w-full bg-gray-800 rounded" height="200"></canvas>
-      </div>
-      <div class="hidden text-sm text-blue-300 mt-2" id="kostenTexte"></div>
-
-      <!-- Picker -->
-      <div>
-        <label for="modulmenge" class="block">Module</label>
-        <select id="modulmenge" class="text-black w-full"></select>
-        <p id="modulpreis_out" class="text-sm text-blue-300"></p>
-      </div>
-
-      <div>
-        <label for="speicherwahl" class="block">Speicher</label>
-        <select id="speicherwahl" class="text-black w-full"></select>
-        <p id="speicherpreis_out" class="text-sm text-blue-300"></p>
-      </div>
-
-      <div>
-        <label for="wechselrichterwahl" class="block">Wechselrichter</label>
-        <select id="wechselrichterwahl" class="text-black w-full"></select>
-        <p id="wechselrichterpreis_out" class="text-sm text-blue-300"></p>
-      </div>
-
-      <!-- Zusatzleistungen -->
-      <fieldset class="space-y-2">
-        <legend class="font-semibold">Zusatzleistungen</legend>
-        <label><input type="checkbox" class="mr-2" value="Garantie"> Garantieverlängerung (990 € inkl.)</label><br>
-        <label><input type="checkbox" class="mr-2" value="Fernwartung"> Fernwartung (350 € inkl.)</label><br>
-        <label><input type="checkbox" class="mr-2" value="Montage"> Montagekostengarantie (0 €)</label><br>
-        <label><input type="checkbox" class="mr-2" value="Wallbox"> Wallbox (2200 € inkl.)</label><br>
-        <label><input type="checkbox" class="mr-2" value="Netzersatz"> Netzersatzbetrieb (2199 € inkl.)</label><br>
-        <label><input type="checkbox" class="mr-2" value="Potentialausgleich"> Potentialausgleichsschiene (1100 € exkl.)</label>
-      </fieldset>
-
-      <!-- Preisbereich -->
-      <div id="preisbereich" class="mt-4 bg-gray-800 p-4 rounded text-sm"></div>
-      
-      <div id="chartsSection" class="mt-8 space-y-6">
-        <canvas id="chartAutarkie"></canvas>
-        <canvas id="chartEigenverbrauch"></canvas>
-        <canvas id="chartTagesverbrauch"></canvas>
-        <div class="mt-6">
-          <label for="tagSlider" class="block">Tag im Jahr (für Tagesprofil)</label>
-          <input id="tagSlider" type="range" min="1" max="360" value="120" class="w-full accent-blue-300">
-          <p id="tag_out" class="text-sm text-blue-300">Tag: 120</p>
+    <div class="flex-1 flex justify-center bg-gray-900/80 backdrop-blur-md px-2 py-4">
+      <!-- Inhalt bleibt schmal und zentriert -->
+      <main class="w-full max-w-md space-y-6">
+        <!-- Inhalt hier -->
+   
+        <h1 class="text-xl font-bold text-center">IEE Beratungstool</h1>
+  
+        <!-- Slider-Bereich -->
+        <div>
+          <label for="verbrauch" class="block">Verbrauch (kWh/Jahr)</label>
+          <input id="verbrauch" type="range" min="2000" max="20000" value="4000" class="w-full accent-blue-300">
+          <p id="v_out" class="text-sm text-blue-300"></p>
         </div>
-        <canvas id="chartJahresverbrauch"></canvas>
-        <canvas id="chartAutarkieVerlauf"></canvas>
-        <canvas id="chartVerwertung"></canvas>
-      </div>
-
-    </main>
+  
+        <div>
+          <label for="ausrichtung" class="block">Ausrichtung</label>
+          <input id="ausrichtung" type="range" min="0" max="6" value="3" class="w-full accent-blue-300">
+          <p id="a_out" class="text-sm text-blue-300"></p>
+        </div>
+  
+        <div>
+          <label for="seiten" class="block">Belegte Dachseiten</label>
+          <input id="seiten" type="range" min="0" max="2" value="0" class="w-full accent-blue-300">
+          <p id="s_out" class="text-sm text-blue-300"></p>
+        </div>
+  
+        <div>
+          <label for="preis" class="block">Preis pro kWh (ct)</label>
+          <input id="preis" type="range" min="20" max="50" value="30" class="w-full accent-blue-300">
+          <p id="p_out" class="text-sm text-blue-300"></p>
+        </div>
+  
+        <div>
+          <label for="grundpreis" class="block">Grundpreis/Jahr (€)</label>
+          <input id="grundpreis" type="range" min="70" max="250" value="120" class="w-full accent-blue-300">
+          <p id="g_out" class="text-sm text-blue-300"></p>
+        </div>
+  
+        <!-- Empfehlungen -->
+        <div id="empfehlung" class="hidden p-3 bg-gray-800 rounded text-sm"></div>
+  
+        <!-- Chart -->
+        <div id="chartContainer" class="hidden mt-6">
+          <canvas id="kostenChart" class="w-full bg-gray-800 rounded" height="200"></canvas>
+        </div>
+        <div class="hidden text-sm text-blue-300 mt-2" id="kostenTexte"></div>
+  
+        <!-- Picker -->
+        <div>
+          <label for="modulmenge" class="block">Module</label>
+          <select id="modulmenge" class="text-black w-full"></select>
+          <p id="modulpreis_out" class="text-sm text-blue-300"></p>
+        </div>
+  
+        <div>
+          <label for="speicherwahl" class="block">Speicher</label>
+          <select id="speicherwahl" class="text-black w-full"></select>
+          <p id="speicherpreis_out" class="text-sm text-blue-300"></p>
+        </div>
+  
+        <div>
+          <label for="wechselrichterwahl" class="block">Wechselrichter</label>
+          <select id="wechselrichterwahl" class="text-black w-full"></select>
+          <p id="wechselrichterpreis_out" class="text-sm text-blue-300"></p>
+        </div>
+  
+        <!-- Zusatzleistungen -->
+        <fieldset class="space-y-2">
+          <legend class="font-semibold">Zusatzleistungen</legend>
+          <label><input type="checkbox" class="mr-2" value="Garantie"> Garantieverlängerung (990 € inkl.)</label><br>
+          <label><input type="checkbox" class="mr-2" value="Fernwartung"> Fernwartung (350 € inkl.)</label><br>
+          <label><input type="checkbox" class="mr-2" value="Montage"> Montagekostengarantie (0 €)</label><br>
+          <label><input type="checkbox" class="mr-2" value="Wallbox"> Wallbox (2200 € inkl.)</label><br>
+          <label><input type="checkbox" class="mr-2" value="Netzersatz"> Netzersatzbetrieb (2199 € inkl.)</label><br>
+          <label><input type="checkbox" class="mr-2" value="Potentialausgleich"> Potentialausgleichsschiene (1100 € exkl.)</label>
+        </fieldset>
+  
+        <!-- Preisbereich -->
+        <div id="preisbereich" class="mt-4 bg-gray-800 p-4 rounded text-sm"></div>
+        
+        <div id="chartsSection" class="mt-8 space-y-6">
+          <canvas id="chartAutarkie"></canvas>
+          <canvas id="chartEigenverbrauch"></canvas>
+          <canvas id="chartTagesverbrauch"></canvas>
+          <div class="mt-6">
+            <label for="tagSlider" class="block">Tag im Jahr (für Tagesprofil)</label>
+            <input id="tagSlider" type="range" min="1" max="360" value="120" class="w-full accent-blue-300">
+            <p id="tag_out" class="text-sm text-blue-300">Tag: 120</p>
+          </div>
+          <canvas id="chartJahresverbrauch"></canvas>
+          <canvas id="chartAutarkieVerlauf"></canvas>
+          <canvas id="chartVerwertung"></canvas>
+        </div>
+      </main>
+    </div>
 
     <!-- Rechter Rand -->
     <div class="hidden lg:block w-1/3 backdrop-blur-sm bg-gray-800/50"></div>
-    <div class="block lg:hidden w-full bg-gray-900/80 backdrop-blur-md"></div>
   </div>
 
   <script type="module" src="app.js"></script>
