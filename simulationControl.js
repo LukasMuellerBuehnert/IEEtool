@@ -24,8 +24,15 @@ export function calcRenderAllGraphs(jahresVerbrauch, pvLeistung, speicherKapazit
 }
 
 export function calcRenderDailyGraph(jahresVerbrauch, pvLeistung, speicherKapazitaet, tag) {
-  const { stundenDaten } = simuliereTag(tag, jahresVerbrauch, pvLeistung, 0, speicherKapazitaet, 0.95);
-  renderTagesStack(stundenDaten, 'chartTagesverbrauch');
+  const eta = 0.95;
 
-  console.log("DailyGraph updated")
+  // Tag davor simulieren, um Speicherstand zu aktualisieren
+  const tagDavor = Math.max(0, tag - 1);
+  const { speicherstand } = simuliereTag(tagDavor, jahresVerbrauch, pvLeistung, 0.4 * speicherKapazitaet, speicherKapazitaet, eta);
+
+  // Jetzt den gewünschten Tag simulieren mit realistischem Speicherstand
+  const { stundenDaten } = simuliereTag(tag, jahresVerbrauch, pvLeistung, speicherstand, speicherKapazitaet, eta);
+
+  renderTagesStack(stundenDaten, 'chartTagesverbrauch');
+  console.log("DailyGraph updated with carry-over Speicherstand");
 }
