@@ -1,0 +1,10 @@
+    <!-- HTW Unabhängigkeitsrechner -->
+      <iframe
+        id="htwFrame"
+        src="https://solar.htw-berlin.de/rechner/unabhaengigkeitsrechner/?load=4000&pv=6.0&bat=3.0"
+        width="100%"
+        height="600"
+        style="border: none; background: white;"
+        loading="lazy"
+        title="Unabhängigkeitsrechner der HTW Berlin"
+      ></iframe>
