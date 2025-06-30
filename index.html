@@ -115,19 +115,70 @@
         <!-- Preisbereich -->
         <div id="preisbereich" class="mt-4 bg-gray-800 p-4 rounded text-sm"></div>
         
-        <div id="chartsSection" class="mt-8 space-y-6">
-          <canvas id="chartAutarkie"></canvas>
-          <canvas id="chartEigenverbrauch"></canvas>
-          <canvas id="chartTagesverbrauch"></canvas>
-          <div class="mt-6">
-            <label for="tagSlider" class="block">Tag im Jahr (für Tagesprofil)</label>
-            <input id="tagSlider" type="range" min="1" max="360" value="120" class="w-full accent-blue-300">
-            <p id="tag_out" class="text-sm text-blue-300">Tag: 120</p>
+        <div id="chartsSection" class="mt-12 space-y-10">
+          <!-- Titel & Einleitung -->
+          <div class="space-y-1">
+            <h2 class="text-lg font-semibold text-white">Simulationsergebnisse</h2>
+            <p class="text-xs text-gray-400">Disclaimer: vereinfachte mathematische Modelle</p>
           </div>
-          <canvas id="chartJahresverbrauch"></canvas>
-          <canvas id="chartAutarkieVerlauf"></canvas>
-          <canvas id="chartVerwertung"></canvas>
+        
+          <!-- Dynamische Zusammenfassung -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm text-blue-300">
+            <p>Verbrauch: <span id="summaryVerbrauch">–</span> kWh</p>
+            <p>PV-Leistung: <span id="summaryLeistung">–</span> kWp</p>
+            <p>Speicher: <span id="summarySpeicher">–</span> kWh</p>
+          </div>
+        
+          <!-- Autarkie -->
+          <div class="space-y-2">
+            <h3 class="text-md font-semibold text-white">Autarkie (Jahr)</h3>
+            <p class="text-sm text-blue-300">Anteil des Strombedarfs, der ohne Netzbezug gedeckt wird</p>
+            <canvas id="chartAutarkie"></canvas>
+            <p id="summaryAutarkie" class="text-sm text-blue-300">Autarkiegrad: – %</p>
+          </div>
+        
+          <!-- Eigenverbrauch -->
+          <div class="space-y-2">
+            <h3 class="text-md font-semibold text-white">Eigenverbrauch (Jahr)</h3>
+            <p class="text-sm text-blue-300">Wie viel vom erzeugten Strom selbst genutzt wird</p>
+            <canvas id="chartEigenverbrauch"></canvas>
+            <p id="summaryEigenverbrauch" class="text-sm text-blue-300">Eigenverbrauchsanteil: – %</p>
+          </div>
+        
+          <!-- Tagesprofil -->
+          <div class="space-y-2">
+            <h3 class="text-md font-semibold text-white">Tagesprofil</h3>
+            <p class="text-sm text-blue-300">Direktverbrauch, Speicher und Netzbezug je Stunde</p>
+            <canvas id="chartTagesverbrauch"></canvas>
+            <div class="mt-2">
+              <label for="tagSlider" class="block">Tag im Jahr (für Tagesprofil)</label>
+              <input id="tagSlider" type="range" min="1" max="360" value="120" class="w-full accent-blue-300">
+              <p id="tag_out" class="text-sm text-blue-300">Tag: 120</p>
+            </div>
+          </div>
+        
+          <!-- Monatsverbrauch -->
+          <div class="space-y-2">
+            <h3 class="text-md font-semibold text-white">Verbrauch (Monate)</h3>
+            <p class="text-sm text-blue-300">Strombezug, Direktverbrauch und Speicherverwendung</p>
+            <canvas id="chartJahresverbrauch"></canvas>
+          </div>
+        
+          <!-- Autarkie-Verlauf -->
+          <div class="space-y-2">
+            <h3 class="text-md font-semibold text-white">Autarkie-Verlauf</h3>
+            <p class="text-sm text-blue-300">Monatlicher Autarkiegrad im Jahresverlauf</p>
+            <canvas id="chartAutarkieVerlauf"></canvas>
+          </div>
+        
+          <!-- Ertragsverwertung -->
+          <div class="space-y-2">
+            <h3 class="text-md font-semibold text-white">PV-Ertragsverwertung</h3>
+            <p class="text-sm text-blue-300">Nutzung der PV-Erträge im Jahresverlauf</p>
+            <canvas id="chartVerwertung"></canvas>
+          </div>
         </div>
+
       </main>
     </div>
 
