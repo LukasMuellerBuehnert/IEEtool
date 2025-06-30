@@ -24,7 +24,7 @@ export function calcRenderAllGraphs(jahresVerbrauch, pvLeistung, speicherKapazit
 }
 
 export function calcRenderDailyGraph(jahresVerbrauch, pvLeistung, speicherKapazitaet, tag) {
-  const { stundenDaten } = simuliereTag(tag, jahresVerbrauch, pvLeistung, 0.4*speicherKapazitaet, speicherKapazitaet);
+  const { stundenDaten } = simuliereTag(tag, jahresVerbrauch, pvLeistung, 0, speicherKapazitaet, 0.95);
   renderTagesStack(stundenDaten, 'chartTagesverbrauch');
 
   console.log("DailyGraph updated")
