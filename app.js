@@ -245,7 +245,7 @@ function updatePreise() {
   document.querySelectorAll("input[type=checkbox]").forEach(cb => {
     if (cb.checked) {
       const preis = daten.zusatzleistungen[cb.value] || 0;
-      if (cb.value === "Potentialausgleich") zusatzNetto += preis;
+      if (cb.value === "potentialausgleich") zusatzNetto += preis;
       else zusatzBrutto += preis;
     }
   });
