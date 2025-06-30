@@ -6,6 +6,12 @@ import {
   renderJahresStack, renderAutarkieLine, renderJahresErtrag
 } from './charts.js';
 
+const summaryVerbrauch = document.getElementById("summaryVerbrauch");
+const summaryLeistung = document.getElementById("summaryLeistung");
+const summarySpeicher = document.getElementById("summarySpeicher");
+const summaryAutarkie = document.getElementById("summaryAutarkie");
+const summaryEigenverbrauch = document.getElementById("summaryEigenverbrauch");
+
 export function calcRenderAllGraphs(jahresVerbrauch, pvLeistung, speicherKapazitaet, referenzTag) {
   const { monatlich, referenzTagesprofil } = simuliereJahr(jahresVerbrauch, pvLeistung, speicherKapazitaet, referenzTag);
 
