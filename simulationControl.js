@@ -9,7 +9,7 @@ import {
 export function calcRenderAllGraphs(jahresVerbrauch, pvLeistung, speicherKapazitaet, referenzTag) {
   const { monatlich, referenzTagesprofil } = simuliereJahr(jahresVerbrauch, pvLeistung, speicherKapazitaet, referenzTag);
 
-  document.getElementById("summaryVerbrauch").textContent = jahresVerbrauch + " kWh";
+  document.getElementById("summaryVerbrauch").textContent = jahresVerbrauch;
   document.getElementById("summaryLeistung").textContent = pvLeistung.toFixed(2);
   document.getElementById("summarySpeicher").textContent = speicherKapazitaet.toFixed(1);
   
