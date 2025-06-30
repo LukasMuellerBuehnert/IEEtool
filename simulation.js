@@ -1,6 +1,6 @@
 import { verbrauchMonat, pvMonat, verbrauchTagProfil, pvTagProfil } from './masken.js';
 
-export function simuliereTag(tagIndex, jahresVerbrauch, pvLeistung, speicherstand, speicherKapazitaet, eta = 0.9) {
+export function simuliereTag(tagIndex, jahresVerbrauch, pvLeistung, speicherstand, speicherKapazitaet, eta = 0.95) {
   const monat = Math.floor(tagIndex / 30);
   const verbrauchTag = (jahresVerbrauch * verbrauchMonat[monat]) / 30;
   const pvTag = (pvLeistung * 1000 * pvMonat[monat]) / 30;
@@ -45,7 +45,7 @@ export function simuliereTag(tagIndex, jahresVerbrauch, pvLeistung, speicherstan
 }
 
 
-export function simuliereJahr(jahresVerbrauch, pvLeistung, speicherKapazitaet, referenzTag = 60, eta = 0.9) {
+export function simuliereJahr(jahresVerbrauch, pvLeistung, speicherKapazitaet, referenzTag = 120, eta = 0.95) {
   const monatlich = Array(12).fill(0).map(() => ({
     direkt: 0,
     speicher: 0,
