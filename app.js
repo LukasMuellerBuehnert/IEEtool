@@ -251,14 +251,14 @@ function updatePreise() {
   });
 
   const pauschalen = daten.pauschalen.pauschalenSumme || 0;
-  const gesamtNetto = modulkosten + speicherpreis + wechselrichterpreis + pauschalen + zusatzNetto;
-  const mwst = zusatzBrutto * 0.19 + zusatzNetto;
-  const gesamtBrutto = zusatzBrutto + gesamtNetto;
+  const gesamtNetto = modulkosten + speicherpreis + wechselrichterpreis + pauschalen + zusatzNetto + zusatzBrutto ;
+  const mwst = zusatzBrutto * 0.19;
+  const gesamtBrutto = mwst + gesamtNetto;
 
   preisbereich.innerHTML = `
     <p>Netto: ${gesamtNetto.toFixed(2)} €</p>
     <p>inkl. MwSt: ${mwst.toFixed(2)} €</p>
-    <p class="font-semibold text-lg">Gesamtbetrag: ${(gesamtBrutto + mwst).toFixed(2)} €</p>
+    <p class="font-semibold text-lg">Gesamtbetrag: ${gesamtBrutto.toFixed(2)} €</p>
   `;
 }
 
