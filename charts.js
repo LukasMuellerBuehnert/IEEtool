@@ -118,6 +118,7 @@ export function renderTagesStack(tagesprofil) {
     },
     options: {
       responsive: true,
+      animation: false,
       scales: { x: { stacked: true }, y: { stacked: true } }
     }
   });
