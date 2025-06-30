@@ -25,7 +25,7 @@ export function renderAutarkiePie(monatlich) {
       labels: ['Direkt', 'Speicher', 'Netzbezug'],
       datasets: [{
         data: [summe.direkt, summe.speicher, summe.bezug],
-        backgroundColor: ['#34d399', '#60a5fa', '#f87171']
+        backgroundColor: ['#fcb826', '#2f6fed', '#e8e2e1']
       }]
     }
   });
@@ -44,7 +44,7 @@ export function renderEigenverbrauchPie(monatlich) {
       labels: ['Direktverbrauch', 'Speichernutzung', 'Einspeisung'],
       datasets: [{
         data: [summe.direkt, summe.speicher, summe.einspeisung],
-        backgroundColor: ['#34d399', '#60a5fa', '#fbbf24']
+        backgroundColor: ['#fcb826', '#2f6fed', '#2dd6fc']
       }]
     }
   });
@@ -61,19 +61,19 @@ export function renderTagesStack(tagesprofil) {
         {
           label: 'Direkt',
           data: tagesprofil.map(t => t.direkt),
-          backgroundColor: '#34d399',
+          backgroundColor: '#fcb826',
           stack: 'verbrauch'
         },
         {
           label: 'Speicher',
           data: tagesprofil.map(t => t.speicher),
-          backgroundColor: '#60a5fa',
+          backgroundColor: '#2f6fed',
           stack: 'verbrauch'
         },
         {
           label: 'Netzbezug',
           data: tagesprofil.map(t => t.bezug),
-          backgroundColor: '#f87171',
+          backgroundColor: '#e8e2e1',
           stack: 'verbrauch'
         }
       ]
@@ -96,19 +96,19 @@ export function renderJahresStack(monatlich) {
         {
           label: 'Direkt',
           data: monatlich.map(m => m.direkt),
-          backgroundColor: '#34d399',
+          backgroundColor: '#fcb826',
           stack: 'verbrauch'
         },
         {
           label: 'Speicher',
           data: monatlich.map(m => m.speicher),
-          backgroundColor: '#60a5fa',
+          backgroundColor: '#2f6fed',
           stack: 'verbrauch'
         },
         {
           label: 'Netzbezug',
           data: monatlich.map(m => m.bezug),
-          backgroundColor: '#f87171',
+          backgroundColor: '#e8e2e1',
           stack: 'verbrauch'
         }
       ]
@@ -159,13 +159,13 @@ export function renderJahresErtrag(monatlich) {
         {
           label: 'Eigenverbrauch (Direkt + Speicher)',
           data: monatlich.map(m => m.direkt + m.speicher),
-          backgroundColor: '#4ade80',
+          backgroundColor: '#fcb826',
           stack: 'gesamt'
         },
         {
           label: 'Einspeisung',
           data: monatlich.map(m => m.einspeisung || 0),
-          backgroundColor: '#fbbf24',
+          backgroundColor: '#2dd6fc',
           stack: 'gesamt'
         }
       ]
