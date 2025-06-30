@@ -265,18 +265,6 @@ function updatePreise() {
   `;
 }
 
-function updateHTWFrame() {
-  const v = +verbrauch.value || 4000;
-  const module = +modulmenge.value || 22;
-  const pv = (module * modulleistung / 1000).toFixed(1); // z. B. 18 Module * 450 W = 8.1 kWp
-
-  const [typ, kapaz] = speicherwahl.value.split(" ");
-  const bat = parseFloat(kapaz) || 6;
-
-  const url = `https://solar.htw-berlin.de/rechner/unabhaengigkeitsrechner/?load=${v}&pv=${pv}&bat=${bat}`;
-  document.getElementById("htwFrame").src = url;
-}
-
 function calcInstalledPower() {
   const module = +modulmenge.value || 0;
   return (module * modulleistung) / 1000;
