@@ -1,22 +1,23 @@
 // simulationControl.js
-import { berechneTag, berechneJahr } from './simulation.js';
+import { simuliereTag, simuliereJahr } from './simulation.js';
+
 import {
   renderAutarkiePie, renderEigenverbrauchPie, renderTagesStack,
   renderJahresStack, renderAutarkieLine, renderJahresErtrag
 } from './charts.js';
 
-export function calcRenderAllGraphs(jahresVerbrauch, pvLeistung, speicherKapazitaet) {
-  const { monatlich } = berechneJahr(jahresVerbrauch, pvLeistung, speicherKapazitaet);
+export function calcRenderAllGraphs(jahresVerbrauch, pvLeistung, speicherKapazitaet, referenzTag) {
+  const { monatlich, referenzTagesprofil } = simuliereJahr(jahresVerbrauch, pvLeistung, speicherKapazitaet, referenzTag);
 
   renderAutarkiePie(monatlich, 'chartAutarkie');
   renderEigenverbrauchPie(monatlich, 'chartEigenverbrauch');
   renderJahresStack(monatlich, 'chartJahresverbrauch');
-  renderTagesStack(tagesprofil, 'chartTagesverbrauch');
+  renderTagesStack(referenzTagesprofil, 'chartTagesverbrauch');
   renderAutarkieLine(monatlich, 'chartAutarkieVerlauf');
   renderJahresErtrag(monatlich, 'chartVerwertung');
 }
 
 export function calcRenderDailyGraph(jahresVerbrauch, pvLeistung, speicherKapazitaet, tag) {
-  const tagesprofil = berechneTag(jahresVerbrauch, pvLeistung, speicherKapazitaet, tag);
-  renderTagesStack(tagesprofil, 'chartTagesverbrauch');
+  const { stundenDaten } = simuliereTag(jahresVerbrauch, pvLeistung, 0.4*speicherKapazitaet, speicherKapazitaet, tag);
+  renderTagesStack(stundenDaten, 'chartTagesverbrauch');
 }
