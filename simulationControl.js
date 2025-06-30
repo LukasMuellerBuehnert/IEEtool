@@ -15,9 +15,13 @@ export function calcRenderAllGraphs(jahresVerbrauch, pvLeistung, speicherKapazit
   renderTagesStack(referenzTagesprofil, 'chartTagesverbrauch');
   renderAutarkieLine(monatlich, 'chartAutarkieVerlauf');
   renderJahresErtrag(monatlich, 'chartVerwertung');
+
+  console.log("Graph updated")
 }
 
 export function calcRenderDailyGraph(jahresVerbrauch, pvLeistung, speicherKapazitaet, tag) {
   const { stundenDaten } = simuliereTag(jahresVerbrauch, pvLeistung, 0.4*speicherKapazitaet, speicherKapazitaet, tag);
   renderTagesStack(stundenDaten, 'chartTagesverbrauch');
+
+  console.log("DailyGraph updated")
 }
