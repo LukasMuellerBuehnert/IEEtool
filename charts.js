@@ -28,7 +28,7 @@ export function renderAutarkiePie(monatlich) {
       labels: ['Direkt', 'Speicher', 'Netzbezug'],
       datasets: [{
         data: [summe.direkt, summe.speicher, summe.bezug],
-        backgroundColor: ['#fcb826', '#2f6fed', '#e8e2e1']
+        backgroundColor: ['#fcb826', '#ffb054', '#e8e2e1']
       }]
     }
   });
@@ -50,7 +50,7 @@ export function renderEigenverbrauchPie(monatlich) {
       labels: ['Direktverbrauch', 'Speichernutzung', 'Einspeisung'],
       datasets: [{
         data: [summe.direkt, summe.speicher, summe.einspeisung],
-        backgroundColor: ['#fcb826', '#2f6fed', '#2dd6fc']
+        backgroundColor: ['#fcb826', '#ffb054', '#2dd6fc']
       }]
     }
   });
@@ -73,7 +73,7 @@ export function renderTagesStack(tagesprofil) {
         {
           label: 'Speicher',
           data: tagesprofil.map(t => t.speicher),
-          backgroundColor: '#2f6fed',
+          backgroundColor: '#ffb054',
           stack: 'verbrauch'
         },
         {
@@ -108,7 +108,7 @@ export function renderJahresStack(monatlich) {
         {
           label: 'Speicher',
           data: monatlich.map(m => m.speicher),
-          backgroundColor: '#2f6fed',
+          backgroundColor: '#ffb054',
           stack: 'verbrauch'
         },
         {
