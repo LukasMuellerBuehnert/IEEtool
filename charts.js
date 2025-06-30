@@ -19,6 +19,9 @@ export function renderAutarkiePie(monatlich) {
     bezug: a.bezug + b.bezug
   }), { direkt: 0, speicher: 0, bezug: 0 });
 
+  const autarkieGesamt = ((summe.direkt + summe.speicher) / (summe.direkt + summe.speicher + summe.bezug)) * 100;
+  document.getElementById("summaryAutarkie").textContent = `Autarkiegrad: ${autarkieGesamt.toFixed(1)} %`;
+  
   createOrUpdateChart("chartAutarkie", {
     type: 'pie',
     data: {
@@ -37,6 +40,9 @@ export function renderEigenverbrauchPie(monatlich) {
     speicher: a.speicher + b.speicher,
     einspeisung: (a.einspeisung || 0) + (b.einspeisung || 0)
   }), { direkt: 0, speicher: 0, einspeisung: 0 });
+
+  const eigenverbrauchsquote = ((summe.direkt + summe.speicher) / (summe.direkt + summe.speicher + summe.einspeisung)) * 100;
+  document.getElementById("summaryEigenverbrauch").textContent = `Eigenverbrauchsanteil: ${eigenverbrauchsquote.toFixed(1)} %`;
 
   createOrUpdateChart("chartEigenverbrauch", {
     type: 'pie',
