@@ -4,7 +4,7 @@ const charts = {};
 const COLOR_DIREKT = '#f6ff54';
 const COLOR_SPEICHER = '#ff9354';
 const COLOR_NETZ = '#e8e2e1';
-const COLOR_EINSPEISUNG = '#54daff';
+const COLOR_EINSPEISUNG = '#bdf1ff';
 const COLOR_AUTARKIELINE = '#facc15';
 
 // Standard-Tooltip mit Prozentanzeige für Pie-Charts
