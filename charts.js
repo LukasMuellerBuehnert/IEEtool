@@ -1,6 +1,31 @@
-// charts.js
-
 const charts = {};
+
+// Farben
+const COLOR_DIREKT = '#f6ff54';
+const COLOR_SPEICHER = '#ff9354';
+const COLOR_NETZ = '#e8e2e1';
+const COLOR_EINSPEISUNG = '#54daff';
+const COLOR_AUTARKIELINE = '#facc15';
+
+// Standard-Tooltip mit Prozentanzeige für Pie-Charts
+function getPieOptions(dataArray) {
+  return {
+    responsive: true,
+    plugins: {
+      tooltip: {
+        callbacks: {
+          label: function (context) {
+            const data = dataArray;
+            const total = data.reduce((sum, val) => sum + val, 0);
+            const value = context.raw;
+            const percent = ((value / total) * 100).toFixed(1);
+            return `${context.label}: ${percent} %`;
+          }
+        }
+      }
+    }
+  };
+}
 
 function createOrUpdateChart(id, config) {
   if (charts[id]) {
@@ -12,6 +37,7 @@ function createOrUpdateChart(id, config) {
   }
 }
 
+// Autarkie
 export function renderAutarkiePie(monatlich) {
   const summe = monatlich.reduce((a, b) => ({
     direkt: a.direkt + b.direkt,
@@ -19,21 +45,24 @@ export function renderAutarkiePie(monatlich) {
     bezug: a.bezug + b.bezug
   }), { direkt: 0, speicher: 0, bezug: 0 });
 
+  const daten = [summe.direkt, summe.speicher, summe.bezug];
   const autarkieGesamt = ((summe.direkt + summe.speicher) / (summe.direkt + summe.speicher + summe.bezug)) * 100;
   document.getElementById("summaryAutarkie").textContent = `Autarkiegrad: ${autarkieGesamt.toFixed(1)} %`;
-  
+
   createOrUpdateChart("chartAutarkie", {
     type: 'pie',
     data: {
       labels: ['Direkt', 'Speicher', 'Netzbezug'],
       datasets: [{
-        data: [summe.direkt, summe.speicher, summe.bezug],
-        backgroundColor: ['#fcb826', '#ffb054', '#e8e2e1']
+        data: daten,
+        backgroundColor: [COLOR_DIREKT, COLOR_SPEICHER, COLOR_NETZ]
       }]
-    }
+    },
+    options: getPieOptions(daten)
   });
 }
 
+// Eigenverbrauch
 export function renderEigenverbrauchPie(monatlich) {
   const summe = monatlich.reduce((a, b) => ({
     direkt: a.direkt + b.direkt,
@@ -41,6 +70,7 @@ export function renderEigenverbrauchPie(monatlich) {
     einspeisung: (a.einspeisung || 0) + (b.einspeisung || 0)
   }), { direkt: 0, speicher: 0, einspeisung: 0 });
 
+  const daten = [summe.direkt, summe.speicher, summe.einspeisung];
   const eigenverbrauchsquote = ((summe.direkt + summe.speicher) / (summe.direkt + summe.speicher + summe.einspeisung)) * 100;
   document.getElementById("summaryEigenverbrauch").textContent = `Eigenverbrauchsanteil: ${eigenverbrauchsquote.toFixed(1)} %`;
 
@@ -49,13 +79,15 @@ export function renderEigenverbrauchPie(monatlich) {
     data: {
       labels: ['Direktverbrauch', 'Speichernutzung', 'Einspeisung'],
       datasets: [{
-        data: [summe.direkt, summe.speicher, summe.einspeisung],
-        backgroundColor: ['#fcb826', '#ffb054', '#2dd6fc']
+        data: daten,
+        backgroundColor: [COLOR_DIREKT, COLOR_SPEICHER, COLOR_EINSPEISUNG]
       }]
-    }
+    },
+    options: getPieOptions(daten)
   });
 }
 
+// Tagesstack
 export function renderTagesStack(tagesprofil) {
   const labels = Array.from({ length: 24 }, (_, i) => i + 'h');
 
@@ -67,19 +99,19 @@ export function renderTagesStack(tagesprofil) {
         {
           label: 'Direkt',
           data: tagesprofil.map(t => t.direkt),
-          backgroundColor: '#fcb826',
+          backgroundColor: COLOR_DIREKT,
           stack: 'verbrauch'
         },
         {
           label: 'Speicher',
           data: tagesprofil.map(t => t.speicher),
-          backgroundColor: '#ffb054',
+          backgroundColor: COLOR_SPEICHER,
           stack: 'verbrauch'
         },
         {
           label: 'Netzbezug',
           data: tagesprofil.map(t => t.bezug),
-          backgroundColor: '#e8e2e1',
+          backgroundColor: COLOR_NETZ,
           stack: 'verbrauch'
         }
       ]
@@ -91,6 +123,7 @@ export function renderTagesStack(tagesprofil) {
   });
 }
 
+// Jahresstack
 export function renderJahresStack(monatlich) {
   const labels = ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
 
@@ -102,19 +135,19 @@ export function renderJahresStack(monatlich) {
         {
           label: 'Direkt',
           data: monatlich.map(m => m.direkt),
-          backgroundColor: '#fcb826',
+          backgroundColor: COLOR_DIREKT,
           stack: 'verbrauch'
         },
         {
           label: 'Speicher',
           data: monatlich.map(m => m.speicher),
-          backgroundColor: '#ffb054',
+          backgroundColor: COLOR_SPEICHER,
           stack: 'verbrauch'
         },
         {
           label: 'Netzbezug',
           data: monatlich.map(m => m.bezug),
-          backgroundColor: '#e8e2e1',
+          backgroundColor: COLOR_NETZ,
           stack: 'verbrauch'
         }
       ]
@@ -126,6 +159,7 @@ export function renderJahresStack(monatlich) {
   });
 }
 
+// Autarkie-Verlauf
 export function renderAutarkieLine(monatlich) {
   const labels = ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
   const daten = monatlich.map(m => ((m.direkt + m.speicher) / (m.direkt + m.speicher + m.bezug)) * 100);
@@ -137,7 +171,7 @@ export function renderAutarkieLine(monatlich) {
       datasets: [{
         label: 'Autarkiegrad (%)',
         data: daten,
-        borderColor: '#facc15',
+        borderColor: COLOR_AUTARKIELINE,
         backgroundColor: 'transparent'
       }]
     },
@@ -154,6 +188,7 @@ export function renderAutarkieLine(monatlich) {
   });
 }
 
+// Jahresertrag
 export function renderJahresErtrag(monatlich) {
   const labels = ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
 
@@ -165,13 +200,13 @@ export function renderJahresErtrag(monatlich) {
         {
           label: 'Eigenverbrauch (Direkt + Speicher)',
           data: monatlich.map(m => m.direkt + m.speicher),
-          backgroundColor: '#fcb826',
+          backgroundColor: COLOR_DIREKT,
           stack: 'gesamt'
         },
         {
           label: 'Einspeisung',
           data: monatlich.map(m => m.einspeisung || 0),
-          backgroundColor: '#2dd6fc',
+          backgroundColor: COLOR_EINSPEISUNG,
           stack: 'gesamt'
         }
       ]
