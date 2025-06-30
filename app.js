@@ -161,7 +161,6 @@ function updateVerbrauchText() {
   v_out.textContent = `${verbrauch.value} kWh`;
   updateEmpfehlung();
   updateChart();
-  updateHTWFrame();
   calcRenderAllGraphs(+verbrauch.value, calcInstalledPower(), calcInstalledCapacity(), +tagSlider.value);
 }
 function updateAusrichtungText() {
@@ -204,7 +203,6 @@ function updateModulText() {
   const preis = anzahl * modulpreis;
   modulpreis_out.textContent = `${preis.toFixed(2)} €`;
   updatePreise();
-  updateHTWFrame();
   calcRenderAllGraphs(+verbrauch.value, calcInstalledPower(), calcInstalledCapacity(), +tagSlider.value);
 }
 
@@ -223,7 +221,6 @@ function updateSpeicherText() {
     wechselrichterwahl.appendChild(o);
   });
   updatePreise();
-  updateHTWFrame();
   calcRenderAllGraphs(+verbrauch.value, calcInstalledPower(), calcInstalledCapacity(), +tagSlider.value);
 }
 
