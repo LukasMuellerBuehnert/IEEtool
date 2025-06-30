@@ -34,8 +34,7 @@ const ausrTbl = [
 const seitenTbl = [
   ["1 Seite", 0.65], ["2 Seiten", 0.55], ["3 Seiten", 0.45]
 ];
-const modulleistung = 450;
-const modulpreis = 251;
+
 const steigerung = 1.04;
 
 let daten, chart;
@@ -44,17 +43,18 @@ fetch('preise.json')
   .then(res => res.json())
   .then(json => {
     daten = json;
+
+    const leistungWp = daten.modul.leistungWp;
+    const preisProModul = daten.modul.preisProModul;
+    const montage = daten.modul.dcMontageProkWp;
+
+    // Globale Konstanten berechnen
+    window.modulleistung = leistungWp;
+    window.modulpreis = preisProModul + (leistungWp / 1000) * montage;
+    
     initPicker();
     initSliderTexte();
     calcRenderAllGraphs(4000, 10, 6, +tagSlider.value);   
-    //updateSpeicherText(); // initial auch WR
-    /*
-    updateVerbrauchText();
-    updateAusrichtungText();
-    updateSeitenText();
-    updatePreisText();
-    updateGrundpreisText();
-    */
   });
 
 function initPicker() {
