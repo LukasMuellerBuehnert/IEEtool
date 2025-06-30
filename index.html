@@ -7,19 +7,28 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <meta name="theme-color" content="#0ea5e9" />
+  <style>
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background-image: url('pictures/background.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+  </style>
 </head>
-<body class="bg-gray-900 text-white font-sans" style="
-  background-image: url('pictures/background.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-">
+<body class="text-white font-sans">
+
   <!-- Hauptlayout mit linker Spalte, Hauptbereich und rechter Spalte -->
-  <div class="flex min-h-screen relative overflow-hidden z-10">
+  <div class="flex min-h-screen overflow-hidden">
+    
     <!-- Linker Rand -->
-    <div class="hidden lg:flex w-1/3 bg-gray-800 p-6 items-center justify-center">
-      <div class="text-center text-gray-400 text-sm">
+    <div class="hidden lg:flex w-1/3 backdrop-blur-sm bg-gray-800/50 p-6 items-center justify-center">
+      <div class="text-center text-gray-300 text-sm">
         <p>Willkommen beim</p>
         <p class="text-blue-400 font-semibold">IEE Beratungstool</p>
         <p class="mt-4">Hier könnten Tipps, Kontakt oder Logos stehen.</p>
@@ -27,7 +36,7 @@
     </div>
 
     <!-- Hauptbereich -->
-    <div class="flex-1 max-w-md mx-auto p-4 space-y-6">
+    <main class="flex-1 max-w-md mx-auto p-4 space-y-6 bg-gray-900/80 backdrop-blur-sm rounded-lg">
       <h1 class="text-xl font-bold text-center">IEE Beratungstool</h1>
 
       <!-- Slider-Bereich -->
@@ -117,10 +126,10 @@
         <canvas id="chartVerwertung"></canvas>
       </div>
 
-    </div>
+    </main>
 
     <!-- Rechter Rand -->
-    <div class="hidden lg:block w-1/3 bg-gray-800"></div>
+    <div class="hidden lg:block w-1/3 backdrop-blur-sm bg-gray-800/50"></div>
   </div>
 
   <script type="module" src="app.js"></script>
