@@ -162,7 +162,7 @@ function updateVerbrauchText() {
   updateEmpfehlung();
   updateChart();
   updateHTWFrame();
-  calcRenderAllGraphs(+verbrauch.value, +leistung.value, +speicher.value, +tagSlider.value);
+  calcRenderAllGraphs(+verbrauch.value, calcInstalledPower(), calcInstalledCapacity(), +tagSlider.value);
 }
 function updateAusrichtungText() {
   const a = +ausrichtung.value;
@@ -205,7 +205,7 @@ function updateModulText() {
   modulpreis_out.textContent = `${preis.toFixed(2)} €`;
   updatePreise();
   updateHTWFrame();
-  calcRenderAllGraphs(+verbrauch.value, +leistung.value, +speicher.value, +tagSlider.value);
+  calcRenderAllGraphs(+verbrauch.value, calcInstalledPower(), calcInstalledCapacity(), +tagSlider.value);
 }
 
 function updateSpeicherText() {
@@ -224,7 +224,7 @@ function updateSpeicherText() {
   });
   updatePreise();
   updateHTWFrame();
-  calcRenderAllGraphs(+verbrauch.value, +leistung.value, +speicher.value, +tagSlider.value);
+  calcRenderAllGraphs(+verbrauch.value, calcInstalledPower(), calcInstalledCapacity(), +tagSlider.value);
 }
 
 function updateWechselrichterText() {
@@ -277,6 +277,16 @@ function updateHTWFrame() {
   document.getElementById("htwFrame").src = url;
 }
 
+function calcInstalledPower() {
+  const module = +modulmenge.value || 0;
+  return (module * modulleistung) / 1000;
+}
+
+function calcInstalledCapacity() {
+  const [typ, kapaz] = (speicherwahl.value || "").split(" ");
+  return parseFloat(kapaz) || 0;
+}
+
 // Event-Listener
 verbrauch.addEventListener("input", updateVerbrauchText);
 ausrichtung.addEventListener("input", updateAusrichtungText);
@@ -291,5 +301,5 @@ document.querySelectorAll("input[type=checkbox]").forEach(cb =>
 );
 tagSlider.addEventListener("input", () => {
   tag_out.textContent = `Tag: ${tagSlider.value}`;
-  calcRenderDailyGraph(+verbrauch.value, +leistung.value, +speicher.value, +tagSlider.value);
+  calcRenderDailyGraph(+verbrauch.value, calcInstalledPower(), calcInstalledCapacity(), +tagSlider.value);
 });
